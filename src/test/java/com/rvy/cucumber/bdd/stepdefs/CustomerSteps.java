@@ -22,7 +22,7 @@ public class CustomerSteps extends AbstractSteps implements En {
 
     Given("Admin wants to create a customer with the following attributes", (DataTable customerDt) -> {
       testContext().reset();
-      List<List<Object>> customerList = customerDt.asLists(Customer.class);
+      List<Customer> customerList = customerDt.asList(Customer.class);
 
       // First row of DataTable has the employee attributes hence calling get(0) method.
       super.testContext()
