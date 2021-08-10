@@ -23,18 +23,10 @@ public class CustomerSteps extends AbstractSteps implements En {
     Given("Admin wants to create a customer with the following attributes", (DataTable customerDt) -> {
       testContext().reset();
       List<Customer> customerList = customerDt.asList(Customer.class);
-
       // First row of DataTable has the employee attributes hence calling get(0) method.
       super.testContext()
           .setPayload(customerList.get(0));
     });
-
-//    And("with the following phone numbers", (DataTable phoneDt) -> {
-//      List<Phone> phoneList = phoneDt.asList(Phone.class);
-//      super.testContext()
-//          .getPayload(Employee.class)
-//          .setPhones(phoneList);
-//    });
 
     When("admin saves the new customer {string}", (String testContext) -> {
       String createCustomerUrl = "rvy/api/cm/v1/customers";
