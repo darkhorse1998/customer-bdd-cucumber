@@ -20,7 +20,7 @@ import cucumber.api.junit.Cucumber;
 //	)
 @CucumberOptions(
 		features = "src/test/resources/features",
-		glue= {"stepDefinitions"},
+		glue= {"com.rvy.cucumber.bdd.stepdefs"},
 		plugin = { "pretty", "json:target/Cucumber.json" },
 		monochrome = true
 	)
