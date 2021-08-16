@@ -63,6 +63,7 @@ pipeline {
             steps {
                  archiveArtifacts '**/target/*.jar'
             }
+        }
         stage('Generate HTML report') {
             steps{
         			cucumber buildStatus: 'UNSTABLE',
@@ -77,7 +78,6 @@ pipeline {
                 		]
                   }
 			}
-        }
     }
 }
 
