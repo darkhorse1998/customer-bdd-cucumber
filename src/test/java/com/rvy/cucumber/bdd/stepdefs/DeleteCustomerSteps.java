@@ -1,6 +1,6 @@
 package com.rvy.cucumber.bdd.stepdefs;
 
-
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,39 +10,61 @@ import com.rvy.entity.Customer;
 import cucumber.api.java8.En;
 import io.cucumber.datatable.DataTable;
 
-public class FindCustomerSteps extends AbstractSteps implements En {
+public class DeleteCustomerSteps extends AbstractSteps implements En {
 
-	boolean notNull = false;
 	@Autowired
 	Customer customer;
 	List<Customer> customerList = new ArrayList<Customer>();
 	boolean found = false;
-	public FindCustomerSteps() {
+	boolean deleted = false;
+	public DeleteCustomerSteps() {
 
-		Given("The following customer exists and Admin wants to find the customer by ID", (DataTable customerDt) -> {
+		Given("The following customer exists and Admin wants to delete the customer by ID", (DataTable customerDt) -> {
 			testContext().reset();
 			List<List<String>> customerData = customerDt.asLists(String.class);
 			customerList.add(populateCustomer(customerData.get(1)));
 			customerList.add(populateCustomer(customerData.get(2)));
 		});
 
-		When("admin wants to find the customer with ID {string}", (String id) -> {	
+		When("admin wants to delete the customer with ID {string}", (String id) -> {
 			Integer custId = Integer.parseInt(id);
+			Customer deletecust = null;
 			for(Customer c: customerList) {
 				if(c.getCustomerId().equals(custId)) {
-					found =true;
+					deletecust=c;
+					break;
 				}
+			}
+			if(deletecust!=null) {
+				customerList.remove(deletecust);
+				for(Customer c: customerList) {
+					if(c.getCustomerId().equals(custId)) {
+						found = true;
+						break;
+					}
+				}
+				if(found!=true) {
+					deleted = true;
+				}
+			}
+			else {
+				found = false;
+				deleted = false;
 			}
 		});
 
-		Then("the customer is found", () -> {
-			assertTrue(found);
+		Then("the customer is deleted", () -> {
+			assertTrue(deleted);
 		});
 
+		Then("the customer is not deleted", () -> {
+			assertFalse(deleted); 
+		});
 	}
 
 	private Customer populateCustomer(List<String> list) {
 		Customer customer = new Customer();
+
 		customer.setCustomerId(Integer.parseInt(list.get(0)));
 		customer.setUin(Integer.parseInt(list.get(1)));
 		customer.setName(list.get(2));
@@ -59,4 +81,3 @@ public class FindCustomerSteps extends AbstractSteps implements En {
 		return customer;
 	}
 }
-

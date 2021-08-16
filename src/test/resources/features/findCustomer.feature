@@ -8,3 +8,5 @@ Feature: Find Customer
     	| 2  					| 101  | Bell Novel | bell@amazon.com | 9598745214 | 1999-08-01| C-102		    | GM Road  |Nagpur   | Maharashtra | India   |500078  |504  |
     When admin wants to find the customer with ID '2'
     Then the customer is found
+    
+
